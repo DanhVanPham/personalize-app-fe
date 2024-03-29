@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { ThemeProvider } from "@material-tailwind/react";
+import { SnackbarProvider } from "notistack";
 import App from "./App.tsx";
 import { BrowserRouter } from "react-router-dom";
 import { MaterialTailwindControllerProvider } from "@/context";
@@ -11,6 +12,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <BrowserRouter>
       <ThemeProvider>
         <MaterialTailwindControllerProvider>
+          <SnackbarProvider />
           <App />
         </MaterialTailwindControllerProvider>
       </ThemeProvider>

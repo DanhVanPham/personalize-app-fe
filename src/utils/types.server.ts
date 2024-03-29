@@ -9,3 +9,13 @@ export type LoginForm = {
   email: string;
   password: string;
 };
+
+export type TrackingCoinForm = {
+  id?: string;
+  digitalAsset: string;
+  detail: string;
+  img?: string | null;
+  quantity: number;
+  price: number;
+  soldAt?: Date | null;
+};

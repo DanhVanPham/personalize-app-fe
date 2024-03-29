@@ -7,10 +7,10 @@ type TrackingCoinRowProps = {
   data: {
     digitalAsset: string;
     detail: string;
-    img?: string;
+    img?: string | null;
     quantity: number;
     price: number;
-    currentPrice: number;
+    // currentPrice: number;
   };
   classes: string;
 };
@@ -21,8 +21,8 @@ const prefixValue = (value?: string | number | null, prefix = "$") => {
 };
 
 const TrackingCoinRow = ({ data, classes }: TrackingCoinRowProps) => {
-  const { digitalAsset, detail, img, quantity, price, currentPrice } = data;
-
+  const { digitalAsset, detail, img, quantity, price } = data;
+  const currentPrice = 0;
   const differ = currentPrice - price;
   const isIncrease = differ >= 0;
 
@@ -38,7 +38,7 @@ const TrackingCoinRow = ({ data, classes }: TrackingCoinRowProps) => {
       <td className={classes}>
         <div className="flex items-center gap-4 text-left">
           <img
-            src={img}
+            src={img || ""}
             alt={digitalAsset}
             className="h-10 w-10 rounded-md border p-1"
           />

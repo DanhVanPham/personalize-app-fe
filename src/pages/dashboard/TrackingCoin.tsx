@@ -3,12 +3,18 @@ import {
   CardHeader,
   CardBody,
   Typography,
-  Button,
   IconButton,
+  Spinner,
 } from "@material-tailwind/react";
-import { ArrowPathIcon, PlusIcon } from "@heroicons/react/24/solid";
+import { ArrowPathIcon } from "@heroicons/react/24/solid";
 import { TABLE_HEAD } from "./constants";
 import TrackingCoinRow from "./TrackingCoinRow";
+import { MutateCoinDialog } from "@/components/dialogs/MutateCoinDialog";
+import { useEffect, useState } from "react";
+import { getCoins } from "@/utils/tracking-coin.server";
+import { STATUS_COIN } from "@/utils/constants";
+import { TrackingCoinForm } from "@/utils/types.server";
+import { isEmpty } from "lodash";
 
 const TABLE_ROW = [
   {
@@ -54,6 +60,53 @@ const TABLE_ROW = [
 ];
 
 export function TrackingCoin() {
+  const [dataSource, setDataSource] = useState<TrackingCoinForm[] | null>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    handleFetchCoins();
+  }, []);
+
+  const handleFetchCoins = async () => {
+    try {
+      setIsLoading(true);
+      const data = await getCoins([STATUS_COIN.created]);
+      setDataSource(data);
+    } catch (error) {
+      console.log(error);
+      setDataSource([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const renderContent = () => {
+    const colSpan = TABLE_HEAD.length;
+    if (isLoading)
+      return (
+        <tr>
+          <td colSpan={colSpan} className="flex items-center justify-center">
+            <Spinner className="h-8 w-8" />
+          </td>
+        </tr>
+      );
+
+    if (!dataSource || isEmpty(dataSource))
+      return (
+        <tr>
+          <td colSpan={colSpan} className="flex items-center justify-center">
+            No data
+          </td>
+        </tr>
+      );
+
+    return dataSource.map((data, index) => {
+      const isLast = index === TABLE_ROW.length - 1;
+      const classes = isLast ? "!p-4" : "!p-4 border-b border-gray-300";
+      return <TrackingCoinRow key={index} data={data} classes={classes} />;
+    });
+  };
+
   return (
     <div className="mb-8 mt-12 flex flex-col gap-12">
       <Card>
@@ -63,15 +116,7 @@ export function TrackingCoin() {
               Tracking Revenue Table
             </Typography>
             <div className="flex items-center gap-2">
-              <Button
-                variant="filled"
-                color="white"
-                size="md"
-                className="flex items-center gap-0.5"
-              >
-                <PlusIcon className="h-5 w-5" />
-                Add Crypto
-              </Button>
+              <MutateCoinDialog handleSuccess={handleFetchCoins} />
               <IconButton variant="text" color="white" size="md">
                 <ArrowPathIcon className="h-5 w-5 text-white" />
               </IconButton>
@@ -85,11 +130,11 @@ export function TrackingCoin() {
                 {TABLE_HEAD.map(({ head, customeStyle }) => (
                   <th
                     key={head}
-                    className={`border-blue-gray-50 border-b px-5 py-3 text-left ${customeStyle}`}
+                    className={`border-b border-blue-gray-50 px-5 py-3 text-left ${customeStyle}`}
                   >
                     <Typography
                       variant="small"
-                      className="text-blue-gray-400 text-[11px] font-bold uppercase"
+                      className="text-[11px] font-bold uppercase text-blue-gray-400"
                     >
                       {head}
                     </Typography>
@@ -97,17 +142,7 @@ export function TrackingCoin() {
                 ))}
               </tr>
             </thead>
-            <tbody>
-              {TABLE_ROW.map((data, index) => {
-                const isLast = index === TABLE_ROW.length - 1;
-                const classes = isLast
-                  ? "!p-4"
-                  : "!p-4 border-b border-gray-300";
-                return (
-                  <TrackingCoinRow key={index} data={data} classes={classes} />
-                );
-              })}
-            </tbody>
+            <tbody>{renderContent()}</tbody>
           </table>
         </CardBody>
       </Card>

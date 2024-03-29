@@ -34,6 +34,6 @@ model TrackingCoin {
   img         String?
   quantity    Int
   price       Float
-  soldAt      DateTime
+  soldAt      DateTime?
   status      Int
 }

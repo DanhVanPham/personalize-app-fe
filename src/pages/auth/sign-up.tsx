@@ -1,7 +1,30 @@
-import { Input, Checkbox, Button, Typography } from "@material-tailwind/react";
+import { FormProvider, RHFTextField } from "@/components/hook-form";
+import { Checkbox, Button, Typography } from "@material-tailwind/react";
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { SignUpFormType } from "./types";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { SignUpSchema } from "@/utils/validations/SignUpSchema";
+
+const defaultValues: SignUpFormType = {
+  email: "",
+  password: "",
+  confirmPassword: "",
+  firstName: "",
+  lastName: "",
+};
 
 export function SignUp() {
+  const methods = useForm({
+    defaultValues,
+    mode: "onSubmit",
+    resolver: yupResolver(SignUpSchema),
+  });
+
+  function handleSubmit(data: SignUpFormType) {
+    console.log(data);
+  }
+
   return (
     <section className="flex p-8">
       <div className="hidden h-[calc(100vh_-_4rem)] w-2/5 lg:block">
@@ -23,7 +46,12 @@ export function SignUp() {
             Enter your email and password to register.
           </Typography>
         </div>
-        <form className="mx-auto mb-2 mt-8 w-80 max-w-screen-lg lg:w-1/2">
+        <FormProvider
+          id="sign-in-form"
+          methods={methods}
+          onSubmit={methods.handleSubmit(handleSubmit)}
+          className="mx-auto mb-2 mt-8 w-80 max-w-screen-lg lg:w-1/2"
+        >
           <div className="mb-1 flex flex-col gap-6">
             <Typography
               variant="small"
@@ -32,9 +60,76 @@ export function SignUp() {
             >
               Your email
             </Typography>
-            <Input
+            <RHFTextField
+              name="email"
               size="lg"
               placeholder="name@mail.com"
+              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+              labelProps={{
+                className: "before:content-none after:content-none",
+              }}
+            />
+            <Typography
+              variant="small"
+              color="blue-gray"
+              className="-mb-3 font-medium"
+            >
+              Firstname
+            </Typography>
+            <RHFTextField
+              name="firstName"
+              size="lg"
+              placeholder="Danh"
+              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+              labelProps={{
+                className: "before:content-none after:content-none",
+              }}
+            />
+            <Typography
+              variant="small"
+              color="blue-gray"
+              className="-mb-3 font-medium"
+            >
+              Lastname
+            </Typography>
+            <RHFTextField
+              name="lastName"
+              size="lg"
+              placeholder="Pham"
+              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+              labelProps={{
+                className: "before:content-none after:content-none",
+              }}
+            />
+            <Typography
+              variant="small"
+              color="blue-gray"
+              className="-mb-3 font-medium"
+            >
+              Password
+            </Typography>
+            <RHFTextField
+              name="password"
+              type="password"
+              size="lg"
+              placeholder="********"
+              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+              labelProps={{
+                className: "before:content-none after:content-none",
+              }}
+            />
+            <Typography
+              variant="small"
+              color="blue-gray"
+              className="-mb-3 font-medium"
+            >
+              Confirm Password
+            </Typography>
+            <RHFTextField
+              name="confirmPassword"
+              type="password"
+              size="lg"
+              placeholder="********"
               className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
               labelProps={{
                 className: "before:content-none after:content-none",
@@ -59,7 +154,7 @@ export function SignUp() {
             }
             containerProps={{ className: "-ml-2.5" }}
           />
-          <Button className="mt-6" fullWidth>
+          <Button type="submit" className="mt-6" fullWidth>
             Register Now
           </Button>
 
@@ -120,14 +215,14 @@ export function SignUp() {
           </div>
           <Typography
             variant="paragraph"
-            className="text-blue-gray-500 mt-4 text-center font-medium"
+            className="mt-4 text-center font-medium text-blue-gray-500"
           >
             Already have an account?
             <Link to="/auth/sign-in" className="ml-1 text-gray-900">
               Sign in
             </Link>
           </Typography>
-        </form>
+        </FormProvider>
       </div>
     </section>
   );

@@ -5,7 +5,7 @@ import { ACTION_TYPE, initialState } from "./constants";
 export const MaterialTailwind = React.createContext(null);
 MaterialTailwind.displayName = "MaterialTailwindContext";
 
-export function reducer(state, action) {
+export function reducer(state: any, action: any) {
   switch (action.type) {
     case ACTION_TYPE.openSidenav: {
       return { ...state, openSidenav: action.value.openSidenav };
@@ -44,7 +44,7 @@ export function MaterialTailwindControllerProvider({
   );
 
   return (
-    <MaterialTailwind.Provider value={value}>
+    <MaterialTailwind.Provider value={value as any}>
       {children}
     </MaterialTailwind.Provider>
   );
@@ -67,20 +67,20 @@ MaterialTailwindControllerProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export const setOpenSidenav = (dispatch, value) =>
+export const setOpenSidenav = (dispatch: any, value: any) =>
   dispatch({ type: ACTION_TYPE.openSidenav, value });
 
-export const setSidenavType = (dispatch, value) =>
+export const setSidenavType = (dispatch: any, value: any) =>
   dispatch({ type: ACTION_TYPE.sidenavType, value });
 
-export const setSidenavColor = (dispatch, value) =>
+export const setSidenavColor = (dispatch: any, value: any) =>
   dispatch({ type: ACTION_TYPE.sidenavColor, value });
 
-export const setTransparentNavbar = (dispatch, value) =>
+export const setTransparentNavbar = (dispatch: any, value: any) =>
   dispatch({ type: ACTION_TYPE.transparentNavbar, value });
 
-export const setFixedNavbar = (dispatch, value) =>
+export const setFixedNavbar = (dispatch: any, value: any) =>
   dispatch({ type: ACTION_TYPE.fixedNavbar, value });
 
-export const setOpenConfigurator = (dispatch, value) =>
+export const setOpenConfigurator = (dispatch: any, value: any) =>
   dispatch({ type: ACTION_TYPE.openConfiguration, value });

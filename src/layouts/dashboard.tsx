@@ -11,11 +11,11 @@ import routes from "@/routes";
 import { useMaterialTailwindController, setOpenConfigurator } from "@/context";
 
 export function Dashboard() {
-  const [controller, dispatch] = useMaterialTailwindController();
+  const [controller, dispatch] = useMaterialTailwindController() as any;
   const { sidenavType } = controller;
 
   return (
-    <div className="bg-blue-gray-50/50 min-h-screen">
+    <div className="min-h-screen bg-blue-gray-50/50">
       <Sidenav
         routes={routes}
         brandImg={
@@ -28,11 +28,11 @@ export function Dashboard() {
         <IconButton
           size="lg"
           color="white"
-          className="shadow-blue-gray-900/10 fixed bottom-8 right-8 z-40 rounded-full"
+          className="fixed z-40 rounded-full shadow-blue-gray-900/10 bottom-8 right-8"
           ripple={false}
           onClick={() => setOpenConfigurator(dispatch, true)}
         >
-          <Cog6ToothIcon className="h-5 w-5" />
+          <Cog6ToothIcon className="w-5 h-5" />
         </IconButton>
         <Routes>
           {routes.map(

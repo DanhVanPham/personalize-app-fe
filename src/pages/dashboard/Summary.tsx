@@ -1,7 +1,6 @@
 import { STATUS_COIN } from '@/utils/constants';
 import { fThousandSeparator, prefixValue, roundNumber } from '@/utils/helpers';
 import { Typography } from '@material-tailwind/react'
-import React from 'react'
 
 const Summary = ({data}: {data : any}) => {
 

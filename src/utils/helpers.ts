@@ -1,3 +1,5 @@
+import { isNil } from "lodash";
+
 export function getDecimalPart(number: number, precision = 10) {
   // Use modulo operator to get the remainder
   const remainder = number % 1;
@@ -31,3 +33,8 @@ export function fThousandSeparator(number?: number | string, nullValue = null) {
 
   return numberPart + decimalPart;
 }
+
+export const prefixValue = (value?: string | number | null, prefix = "$") => {
+  if (isNil(value)) return null;
+  return `${prefix}${value}`;
+};

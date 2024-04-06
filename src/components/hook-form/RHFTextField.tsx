@@ -24,7 +24,7 @@ export default function RHFTextField({ name, ...other }: Props) {
       name={name}
       control={control}
       render={({ field, fieldState: { error } }) => (
-        <div>
+        <div className="w-full">
           <Input
             {...field}
             value={

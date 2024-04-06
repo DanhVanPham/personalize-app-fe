@@ -21,6 +21,6 @@ export const TABLE_HEAD = [
   },
   {
     head: "Actions",
-    customeStyle: "text-right",
+    customeStyle: "text-center",
   },
 ];

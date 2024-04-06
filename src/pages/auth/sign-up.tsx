@@ -30,10 +30,10 @@ export function SignUp() {
       <div className="hidden h-[calc(100vh_-_4rem)] w-2/5 lg:block">
         <img
           src="/img/pattern.png"
-          className="h-full w-full rounded-3xl object-cover"
+          className="object-cover w-full h-full rounded-3xl"
         />
       </div>
-      <div className="flex w-full flex-col items-center justify-center lg:w-3/5">
+      <div className="flex flex-col items-center justify-center w-full lg:w-3/5">
         <div className="text-center">
           <Typography variant="h2" className="mb-4 font-bold">
             Join Us Today
@@ -50,9 +50,9 @@ export function SignUp() {
           id="sign-in-form"
           methods={methods}
           onSubmit={methods.handleSubmit(handleSubmit)}
-          className="mx-auto mb-2 mt-8 w-80 max-w-screen-lg lg:w-1/2"
+          className="max-w-screen-lg mx-auto mt-8 mb-2 w-80 lg:w-1/2"
         >
-          <div className="mb-1 flex flex-col gap-6">
+          <div className="flex flex-col gap-6 mb-1">
             <Typography
               variant="small"
               color="blue-gray"
@@ -64,7 +64,7 @@ export function SignUp() {
               name="email"
               size="lg"
               placeholder="name@mail.com"
-              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+              className="  focus:!border-t-gray-900"
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
@@ -80,7 +80,7 @@ export function SignUp() {
               name="firstName"
               size="lg"
               placeholder="Danh"
-              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+              className="  focus:!border-t-gray-900"
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
@@ -96,7 +96,7 @@ export function SignUp() {
               name="lastName"
               size="lg"
               placeholder="Pham"
-              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+              className="  focus:!border-t-gray-900"
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
@@ -113,7 +113,7 @@ export function SignUp() {
               type="password"
               size="lg"
               placeholder="********"
-              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+              className="  focus:!border-t-gray-900"
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
@@ -130,7 +130,7 @@ export function SignUp() {
               type="password"
               size="lg"
               placeholder="********"
-              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+              className="  focus:!border-t-gray-900"
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
@@ -215,7 +215,7 @@ export function SignUp() {
           </div>
           <Typography
             variant="paragraph"
-            className="mt-4 text-center font-medium text-blue-gray-500"
+            className="mt-4 font-medium text-center text-blue-gray-500"
           >
             Already have an account?
             <Link to="/auth/sign-in" className="ml-1 text-gray-900">

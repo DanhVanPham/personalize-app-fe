@@ -5,7 +5,9 @@ import { SnackbarProvider } from "notistack";
 import App from "./App.tsx";
 import { BrowserRouter } from "react-router-dom";
 import { MaterialTailwindControllerProvider } from "@/context";
+import { store } from './app/store.ts'
 import "../public/css/tailwind.css";
+import { Provider } from "react-redux";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -13,7 +15,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <ThemeProvider>
         <MaterialTailwindControllerProvider>
           <SnackbarProvider />
-          <App />
+          <Provider store={store}>
+            <App />
+          </Provider>
         </MaterialTailwindControllerProvider>
       </ThemeProvider>
     </BrowserRouter>

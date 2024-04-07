@@ -13,6 +13,7 @@ export type LoginForm = {
 export type TrackingCoinForm = {
   id?: string;
   digitalAsset: string;
+  market: string;
   detail: string;
   img?: string | null;
   quantity: number;

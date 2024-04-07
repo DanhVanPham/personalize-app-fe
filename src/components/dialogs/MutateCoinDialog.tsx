@@ -6,6 +6,8 @@ import {
   CardBody,
   CardFooter,
   Typography,
+  Select,
+  Option,
 } from "@material-tailwind/react";
 import { enqueueSnackbar } from "notistack";
 import { FormProvider, RHFTextField } from "../hook-form";
@@ -14,7 +16,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import type { TrackingCoinForm } from "@/utils/types.server";
 import { MutateCoinSchema } from "@/utils/validations/MutateCoinSchema";
 import Loader from "../Loader";
-import { useCreateTrackingCoinMutation, useGetExchangeInfoQuery, useUpdateTrackingCoinMutation } from "@/app/api/apiSlice";
+import { useCreateTrackingCoinMutation, useUpdateTrackingCoinMutation } from "@/app/api/apiSlice";
+import { MARKET_OPTIONS, MARKET_TYPE } from "@/utils/constants";
 
 type Props = {
   open: boolean;
@@ -22,14 +25,15 @@ type Props = {
   onClose: () => void;
 }
 
+
 export function MutateCoinDialog({open, defaultData, onClose}: Props) {
-  const { data: exchangeInfos } = useGetExchangeInfoQuery(null);
   const [createTrackingCoin, {isLoading: isCreating }] = useCreateTrackingCoinMutation()
   const [updateTrackingCoin, {isLoading: isUpdating }] = useUpdateTrackingCoinMutation()
-console.log({exchangeInfos})
+
   const defaultValues: TrackingCoinForm = useMemo(() => ({
     digitalAsset: defaultData?.digitalAsset || "",
     detail: defaultData?.detail ||"",
+    market: defaultData?.market || MARKET_TYPE.binance,
     img: defaultData?.img || "",
     quantity: defaultData?.quantity || 0,
     price: defaultData?.price || 0,
@@ -50,6 +54,12 @@ console.log({exchangeInfos})
 
   const imageUrl = methods.watch("img");
 
+  const marketWatch = methods.watch('market');
+
+  const handleChange= (key: any, value: any) => {
+    methods.setValue(key, value)
+  }
+
   async function handleAdd(data: TrackingCoinForm) {
     try {
       await createTrackingCoin({
@@ -58,6 +68,7 @@ console.log({exchangeInfos})
         price: data.price,
         quantity: data.quantity,
         img: data.img,
+        market: data.market
       });
       onClose()
       enqueueSnackbar("Add coin successfully", {
@@ -82,6 +93,7 @@ console.log({exchangeInfos})
         price: data.price,
         quantity: data.quantity,
         img: data.img,
+        market: data.market
       });
       onClose()
       enqueueSnackbar("Update coin successfully", {
@@ -126,15 +138,26 @@ console.log({exchangeInfos})
                 <Typography className="-mb-2" variant="h6">
                   Digital Asset
                 </Typography>
-                <RHFTextField
-                  name="digitalAsset"
-                  size="lg"
-                  placeholder="BTCUSDT"
-                  className="  focus:!border-t-gray-900"
-                  labelProps={{
-                    className: "before:content-none after:content-none",
-                  }}
-                />
+                  <RHFTextField
+                    name="digitalAsset"
+                    size="lg"
+                    placeholder="BTCUSDT"
+                    className="  focus:!border-t-gray-900"
+                    labelProps={{
+                      className: "before:content-none after:content-none",
+                    }}
+                  />
+                <Typography className="-mb-2"  variant="h6">
+                  Market
+                </Typography>
+                <Select
+                  value={marketWatch}
+                  onChange={(value) => handleChange('market', value)}
+                >
+                  {MARKET_OPTIONS.map(market => (
+                    <Option key={market.id} value={market.value}>{market.label}</Option>
+                  ))}
+                </Select>
                 <Typography className="-mb-2" variant="h6">
                   Detail
                 </Typography>

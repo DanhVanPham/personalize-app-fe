@@ -30,7 +30,7 @@ const Summary = ({data}: {data : any}) => {
 
   return (
     <tr>
-        <td  colSpan={4} className={'!p-4 text-right'}>
+        <td  colSpan={5} className={'!p-4 text-right'}>
             Summary Revenue
         </td>
         <td className='!p-4'>

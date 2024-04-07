@@ -4,6 +4,7 @@ export const MutateCoinSchema = yup.object().shape({
   digitalAsset: yup.string().required("Digital Asset is required!"),
   img: yup.string().notRequired(),
   detail: yup.string().required("Detail is required!"),
+  market: yup.string().required(""),
   quantity: yup
     .number()
     .required("Quantity is required!")

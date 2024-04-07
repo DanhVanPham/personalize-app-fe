@@ -4,6 +4,10 @@ export const TABLE_HEAD = [
     customeStyle: "!text-left",
   },
   {
+    head: "Market",
+    customeStyle: "!text-center",
+  },
+  {
     head: "Quantity",
     customeStyle: "text-right",
   },

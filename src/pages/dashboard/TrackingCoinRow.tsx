@@ -3,10 +3,10 @@ import { enqueueSnackbar } from "notistack";
 import { TrashIcon, PencilIcon, CloudArrowDownIcon } from "@heroicons/react/24/solid";
 import { fThousandSeparator, prefixValue, roundNumber } from "@/utils/helpers";
 import ConfirmDialog from "@/components/dialogs/ConfirmDialog";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useDeleteTrackingCoinMutation, useUpdateTrackingCoinMutation } from "@/app/api/apiSlice";
 import Loader from "@/components/Loader";
-import { STATUS_COIN } from "@/utils/constants";
+import { MARKET_OPTIONS, MARKET_TYPE, STATUS_COIN } from "@/utils/constants";
 import { MutateCoinDialog } from "@/components/dialogs/MutateCoinDialog";
 
 type TrackingCoinRowProps = {
@@ -15,6 +15,7 @@ type TrackingCoinRowProps = {
     digitalAsset: string;
     detail: string;
     img?: string | null;
+    market: string;
     quantity: number;
     price: number;
     currentPrice?: number;
@@ -33,7 +34,10 @@ const TrackingCoinRow = ({ data, classes }: TrackingCoinRowProps) => {
 
   const isLoading = isDeleting || isUpdating;
 
-  const {id, digitalAsset, detail, img, quantity, price, status,  closedPrice = 0,currentPrice = 0} = data;
+  const {
+    id, digitalAsset, detail, img, market = MARKET_TYPE.binance, 
+    quantity, price, status,  closedPrice = 0,currentPrice = 0
+  } = data;
 
   const priceCalc = status === STATUS_COIN.sold ? closedPrice : currentPrice;
   
@@ -97,6 +101,8 @@ const TrackingCoinRow = ({ data, classes }: TrackingCoinRowProps) => {
 
   const handleCloseUpdateDial = () => setUpdateDial(false)
 
+  const foundMarket = useMemo(() => MARKET_OPTIONS.find(item => item.value === market), [market])
+
   return (
     <>
       <tr key={digitalAsset} className="hover:bg-gray-100">
@@ -120,6 +126,14 @@ const TrackingCoinRow = ({ data, classes }: TrackingCoinRowProps) => {
               </Typography>
             </div>
           </div>
+        </td>
+        <td className={classes}>
+          <Typography
+            variant="small"
+            className="text-center !font-normal text-gray-800"
+          >
+            {foundMarket?.label}
+          </Typography>
         </td>
         <td className={classes}>
           <Typography

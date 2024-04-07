@@ -3,7 +3,7 @@ import { Button, Dialog, DialogBody, DialogFooter, DialogHeader } from '@materia
 type Props = {
     open: boolean;
     title?: string;
-    body?: string;
+    body?: any;
     type?: 'delete' | 'submit'
     onClose: () => void;
     onSubmit: () => void;

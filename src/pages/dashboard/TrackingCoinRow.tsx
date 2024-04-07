@@ -164,7 +164,7 @@ const TrackingCoinRow = ({ data, classes }: TrackingCoinRowProps) => {
         </td>
         <td className={classes}>
           <div className="flex justify-center gap-2">
-            {status === STATUS_COIN.sold && (
+            {status === STATUS_COIN.created && (
                 <>
                   <IconButton variant="text" size="sm" onClick={handleOpenConfirmDelDial}>
                     <TrashIcon className="w-5 h-5 text-red-500" />

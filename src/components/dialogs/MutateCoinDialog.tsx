@@ -118,7 +118,7 @@ export function MutateCoinDialog({ open, defaultData, onClose }: Props) {
       <Loader open={isLoading} />
       <Dialog
         size={"md"}
-        className="m-auto w-screen"
+        className="m-auto max-h-[calc(100vh_-_1rem)] w-screen overflow-auto"
         open={open}
         handler={onClose}
       >
